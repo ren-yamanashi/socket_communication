@@ -1,69 +1,59 @@
-# compile
-```
-gcc -c *.c
-```
-or 
-```
-gcc *.c
-```
-# run 
-```
-./a.out
+# プログラムの実行
+
+## コンパイル
+
+```bin
+make compileServer
+make compileClient
 ```
 
+server.exe と client.exe が生成されます。
+これらを実行することでプログラムを起動することができます
 
-# split file and run
-1. you create numberOf file 
-    - example `sum.c , sum.h , main.c`
+<br />
+<br />
 
-2. you switch directory to file in `sum.c , sum.h , main.c`
+## サーバーファイルの実行
 
-3. you do compile file command
-```
-gcc -c sum.c && gcc -c main.c  
-```
+ターミナルを立ち上げ、以下のコマンドを実行します。
 
-4. bind and run
-```
-gcc -o 1102 sum.o main.o && ./1102
+```bin
+make runServer
 ```
 
-## sample
+`server.exe`では、listen が実行され、ソケットは接続待ち状態になります。さらに accept が実行されて接続要求が来るまで待機している状態になります。
 
-### main.c
-```
-#include "sum.h"
+<br />
+<br />
 
-int main(void) {
-    int n1 = 4,n2=5;
-    double x=3.657,y=9.3445;
-    printf("sum: %f \n",sum(x,y));
-    printf("avg: %f \n" , avg(x,y));
-    printf("test \n");
-}
-```
-### sum.c
-```
-#include "sum.h"
+## クライアントファイルの実行
 
-double sum(double x,double y){
-    return x + y;
-} 
+先ほどとは別のターミナルウィンドウから以下のコマンドを実行します。
 
-double avg(double x, double y){
-    return (x+y)/2;
-}
+```bin
+make runClient
 ```
 
-### sum.h
+<br />
+<br />
+
+`client.exe`は`server.exe`が作成したソケットに対して、`connect`を行います。
+`server.exe`のソケットは既に接続待ち状態なので、`client.exe`は`connect`に成功して、データのやり取りに移行します。
+
+```bin
+Start connect...
+Finish connect!
 ```
-#include <stdio.h>
-#ifndef _SUM_H_
-#define _SUM_H_
 
-// protType 
-double sum(double,double);
-double avg(double,double);
+<br />
+<br />
 
-#endif // _SUM_H_
+接続確立後は、client.exe に文字列を入力すれば、それを`client.exe`が`server.exe`に送信します。
+それを受信した`server.exe`が受信した文字列をターミナルに表示します。
+`client.exe` に文字列を入力してからエンターキーを押すと、`server.exe` 側でその文字列が表示されることが確認できると思います。
+
+```bin
+Start connect...
+Finish connect!
+Please Input Message
 ```

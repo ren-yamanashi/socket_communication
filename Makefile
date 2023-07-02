@@ -2,14 +2,14 @@ runMain:
 	gcc src/main.c
 	./a.out
 
-runServer:
+compileServer:
 	gcc src/server.c -o src/server.exe
 
-runClient:
+compileClient:
 	gcc src/client.c -o src/client.exe
 
-execServer:
+runServer:
 	./src/server.exe
 
-execClient:
+runClient:
 	./src/client.exe
